@@ -1,0 +1,6 @@
+LOAD RGB_ascii
+PRINT
+SAVE saved
+LOAD saved
+PRINT
+EXIT

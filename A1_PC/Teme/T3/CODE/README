@@ -1,0 +1,16 @@
+toate informatile imaginii sunt in tipul image
+tipul selection este folosit DOAR pentru selecti
+
+img_read este un wraper pentru citirea unei imaginii care deduce tipui
+si intoarce imaginea
+
+citirea se face prin citirea separata a header-ului si apoi apelarea functiei
+specifica formatului, oferind offset-ul cursorului de decitire
+analog se face salvarea imaginii
+
+stocata cu pixeli RGB, iar in cazul imaginilor binare sau grayscale valoare se
+stocheaza in toate spatiile
+
+alocarea matrici imaginii se face oferind header-ul imaginii
+
+functile ce intorc o variabila de tip image aloca o matrice noua

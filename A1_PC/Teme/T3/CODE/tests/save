@@ -1,0 +1,6 @@
+LOAD P6
+PRINT
+SAVE saved ascii
+LOAD saved
+PRINT
+EXIT

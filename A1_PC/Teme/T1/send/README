@@ -1,0 +1,22 @@
+Simache Cristian Ioan 314CA
+Problema 1: ninel
+	functia is_special verifica daca numarul e "special"
+	Verificarea se face odata cu citirea prin mentinera in memorie a trei elemente succesive din sir.
+	
+Problema 2: vectsecv
+	se foloseste vectorul H pt a salva toate valorile lui n
+	n se descompune cu build_V intr-un fector de frecventa ce e folosit de max_FV si min_FV pentru a obtine numarul maxim si minim construit cu acele cifre
+	se tot genereaza noi numere pana cand se genereaza unul deja generat
+	indicele primei apariti este gasit de in_H si se parcurge H de acolo pentru a afisa perioada
+	
+Problema 3: cedeinvim
+	initial vectorul contine notele dar apoi devine numarul de puncte obtinute de la fiecare materie daca ar lua 10 la marire
+	se sorteaza vectorul si se parcurge descrescator pana cand are destule puncte
+
+Problema 4: nomogram
+	pentru verificarea unei lini:
+		se foloseste un contor pentru pozitie ca parcurge linia
+		pentru fiecare grup contorul este adus la urmatorul punct apoi se parcurge lungimea grupului(verificand ca exista puncte acolo) apoi contorul este mutat inca un spatiu(verificand ca acel spatiu e gol)
+		in final contorul parcurge pana la capatul liniei verificand c nu exista puncte
+	la verificare unei coloane se face identic, doar ca in loc de lini sunt coloane.
+	

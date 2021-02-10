@@ -1,0 +1,6 @@
+LOAD L
+PRINT
+SAVE saved
+LOAD saved
+PRINT
+EXIT

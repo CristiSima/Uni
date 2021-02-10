@@ -1,0 +1,18 @@
+Simache Cristian
+
+dupa citire se folosesc functiele get_X/set_X X={S,C,I} ca interfete
+pentru a accesa elementele mapei in formatul int(I),short(S),char(C)
+functile functioneaza indiferent de endian deoarece folosesc operati pe biti
+valorile incept de la [1,1]
+functia expand asigura extinderea memoriei(sau o bucla infinita)
+
+task1:
+ 	adun valorile si numar elementele de pe margine
+
+task2:
+ 	dupa ce aduc originea la [1,1] utilizez functile get_X set_X potrivite
+
+task3:
+	folosesc o variatie de fill
+	nu curat la intoarcere pentru a nu face apelari
+	inutile

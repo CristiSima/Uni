@@ -1,0 +1,3 @@
+style="{BasedOnStyle: LLVM,IndentWidth: 4,AllowShortLoopsOnASingleLine: false,AllowShortIfStatementsOnASingleLine: Never,BraceWrapping: {BeforeElse: false,AfterFunction: false},TabWidth: 4,UseTab: Always,BreakBeforeBraces: Linux,MaxEmptyLinesToKeep: 1,IndentCaseLabels: false,AllowShortIfStatementsOnASingleLine: false}"
+style="{BasedOnStyle: LLVM,IndentWidth: 4,AllowShortLoopsOnASingleLine: false,BraceWrapping: {BeforeElse: false,AfterFunction: false},TabWidth: 4,UseTab: Always,BreakBeforeBraces: Linux,AllowShortIfStatementsOnASingleLine: Never,MaxEmptyLinesToKeep: 1,IndentCaseLabels: false}"
+clang-format -style="$style" temp.c > temp
