@@ -1,0 +1,28 @@
+314CA
+Simache Cristian-Ioan
+Condrea Tudor-Daniel
+
+1. Concat
+    face un nod nou care leaga cei 2 arbori dati ca parametri si returneaza noul arbore
+2. Index
+    se bazeaza pe weightul nodurilor
+        daca e mai mic decat indexul inseamna ca acel caracter e mai departe in string => merge in dreapta
+        daca e mai mare decat indexul, suntem in locul corect => merge in stanga
+3. Search
+    aceeasi regula de la index
+    daca intregul interval cautat nu se regaseste in nodul in care am aterizat, cautam mai la dreapta si umplem
+4. Split
+    face perechea on the go
+    oricand introduce ceva in perechea de split, introduce o copie a nodului sau fura de la cel original si pune o copie identica in spate
+    edge cases: 0 si idx = strlen(str) => unul din arborii din pereche e intregul arbore
+    cand face un pas la stanga, pierde fiul din dreapta nodului de la care a plecat si il lipeste de arborele de split din dreapta
+    cand face unul la dreapta trebuie sa repare putin arborele ca fura prea mult
+5. Insert
+    face un split la index
+    concateneaza split.left cu noul string si din nou rezultatul cu split.right
+6. Delete
+    face un split la index
+    face un split lui split.right
+    avem 3 bucati acum, split.left si split.right.left si split.right.right
+    concatenam split.left si split.right.right si aruncam split.right.left
+    

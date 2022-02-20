@@ -1,0 +1,27 @@
+ADD <nume_planetă> <indice_planetă> <număr_scuturi>
+	adauga planeta
+		creaza planeta, adauga in ??lista??
+
+BLH
+	elimina planeta
+		FREEE
+
+UPG X Y Z
+	adauxa Z la scutul de Y al planetei X
+		selecteaza +=
+
+EXP X Y
+	axauga scut cu val Y la X
+
+RMV
+	elimina scut
+
+COL
+	ciocnire
+		o logica la ciocnire
+
+ROT
+	se roteste planeta (cv cu scuturi)
+
+SHW
+	info planeta X

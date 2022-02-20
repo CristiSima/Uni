@@ -1,0 +1,14 @@
+Copyright 2021 Simache Cristian
+
+it uses the dll lib from lab3
+
+in process_commands M commands are identified and parsed then the appropriate
+	function is called, in that function parameters are checked and messages
+	sended.
+
+planet_get_nth_shield is a macro that uses dll_get_nth_node and casts
+
+most functions are wrappers for dll functions with checks and printfs
+
+functions that start with planet_shield_ operate on the list of shields
+and planet_rotate has a clockwise and anticlockwise(trigonometrical) version
