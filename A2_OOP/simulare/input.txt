@@ -1,0 +1,10 @@
+ADD:/sdcard/Music/album/cover.jpg
+ADD:/sdcard/Music/Paradise.mp3
+ADD:/sdcard/Music/album Beyonce - Drunk In Love (AUDIO).mp3
+ADD:/sdcard/Download/The Animals - The House of the Rising Sun Mafia III Trailer 3 Casino !!!.mp3
+ADD:/sdcard/Download/Les_Toreadors_from_Carmen_by_Bizet.mp3
+ADD:/sdcard/DCIM/IMG1031.JPG
+Q01:/sdcard/Music
+Q02:/sdcard/DCIM/IMG1031.JPG
+Q02:/sdcard/DCIM/
+Q02:/sdcad/DCIM/

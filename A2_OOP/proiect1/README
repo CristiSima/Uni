@@ -1,0 +1,22 @@
+elements/*:
+    classes for entities modelled
+
+ioutils/*:
+    classes for reading and writing
+    InputData:
+        parses the jsonfile at the provided path
+    Writer:
+        writes the JSONObject to the file
+
+main/*:
+    Main:
+        checks the program on all the tests
+    Test:
+        runs a test from test name
+
+simulation/simulation:
+    runs the simulation
+
+Makefile:
+    in order to use it all the paths must be changed(common.Constants & checker.Checker)
+    bc it's working directory will be in src instead of src/..

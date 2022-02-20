@@ -1,0 +1,32 @@
+
+actions:
+    contains all actions accesible through a series of ActionResolvers
+    Action.getAction is used to return the function that executes the command
+        the interfaces ActionRunner and ActionResolver are used for storeing in Maps
+        the static variable actions is used as the root ActionResolver
+
+systems:
+    contains all sistems
+    [Favorites, Ratings, Views, Genres]:
+        singletons classes
+            a clear method is present for the checker to work
+    User:
+        has static list and map for all users
+            a clear method is present for the checker to work
+    Video:
+        abstract class
+            actual implementations are Movie and Serial
+        has static list and map for all videos(and seperate ones for movies and serials only)
+            a clear method is present for the checker to work
+
+utils:
+    +Comparators:
+        a class with static classes with comparators for: User, Video and actors(ActorInputData)
+    +Filters:
+        predicate generating functions for filtering
+
+Makefile:
+    can be used to compile and run the project
+        path constants need to be changed because the real working directory is src and
+        the constants are for the project root(src/..)
+            TESTS_PATH, OUT_PATH, REF_PATH, RESULT_PATH, JAR_PATH, XML_PATH

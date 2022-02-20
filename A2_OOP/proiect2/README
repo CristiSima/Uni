@@ -1,0 +1,37 @@
+elements/*:
+    classes for entities modelled
+
+ioutils/*:
+    classes for reading and writing
+    InputData:
+        parses the jsonfile at the provided path
+    Writer:
+        writes the JSONObject to the file
+
+main/*:
+    Main:
+        checks the program on all the tests
+    Test:
+        runs a test from test name
+
+simulation/*:
+    Simulation:
+        runs the simulation
+    SimulationStorage:
+        stores the children, gifts and annualChanges to avoid a circular dependency
+
+strategies/*:
+    "visitors" for appling diferent effects
+    each has an entry method that resolves to the specific one
+    AverageNiceScore:
+        calculates nicescore
+    GiftAssignmentOrder:
+        returns a sorted list of Child based on the provided strategy
+    OnBudget:
+        changes a child's budget based on his elf
+    OnGifts:
+        changes a child's gifts based on his elf
+
+Makefile:
+    in order to use it all the paths must be changed(common.Constants & checker.Checker)
+    bc it's working directory will be in src instead of src/..
