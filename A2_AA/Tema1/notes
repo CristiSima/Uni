@@ -1,0 +1,75 @@
+[root@Resmoc Tema]# time ./checker.py --task 1 --algo p3
+21:53:17:INFO: Found Makefile!
+make: Nothing to be done for 'build'.
+21:53:17:INFO: Found Readme
+21:53:17:WARNING: Readme file is very short - be sure to include all the required information
+21:53:17:INFO: Found 30 tests.
+21:55:22:INFO: Running run-p3 test 20..
+./SFH
+21:55:23:INFO: Running run-p3 test 25..
+./SFH
+21:56:31:INFO: Running run-p3 test 2..
+./SFH
+21:56:34:INFO: Running run-p3 test 1..
+./SFH
+21:56:37:INFO: Running run-p3 test 14..
+./SFH
+make: *** [Makefile:16: run-p3] Segmentation fault (core dumped)
+21:56:40:CRITICAL: Error trying to run test 14
+21:56:40:INFO: Running run-p3 test 3..
+./SFH
+21:56:44:INFO: Running run-p3 test 17..
+./SFH
+21:56:45:INFO: Running run-p3 test 8..
+./SFH
+21:56:45:CRITICAL: Error trying to run test 8
+21:56:45:INFO: Running run-p3 test 9..
+./SFH
+21:56:45:INFO: Running run-p3 test 10..
+./SFH
+21:56:47:INFO: Running run-p3 test 6..
+./SFH
+21:57:12:INFO: Running run-p3 test 18..
+./SFH
+21:57:12:INFO: Running run-p3 test 5..
+./SFH
+21:57:37:CRITICAL: Error trying to run test 5
+21:57:37:INFO: Running run-p3 test 19..
+./SFH
+21:57:38:INFO: Running run-p3 test 11..
+./SFH
+21:57:38:INFO: Running run-p3 test 22..
+./SFH
+21:57:38:INFO: Running run-p3 test 13..
+./SFH
+make: *** [Makefile:16: run-p3] Segmentation fault (core dumped)
+21:57:40:CRITICAL: Error trying to run test 13
+21:57:40:INFO: Running run-p3 test 7..
+./SFH
+21:57:43:INFO: Running run-p3 test 21..
+./SFH
+21:57:43:INFO: Running run-p3 test 26..
+./SFH
+21:58:48:INFO: Running run-p3 test 24..
+./SFH
+21:59:54:INFO: Running run-p3 test 30..
+./SFH
+22:00:57:INFO: Running run-p3 test 16..
+./SFH
+make: *** [Makefile:16: run-p3] Segmentation fault (core dumped)
+22:01:20:CRITICAL: Error trying to run test 16
+22:01:20:INFO: Running run-p3 test 29..
+./SFH
+22:02:17:INFO: Running run-p3 test 15..
+./SFH
+make: *** [Makefile:16: run-p3] Segmentation fault (core dumped)
+22:02:20:CRITICAL: Error trying to run test 15
+22:02:20:INFO: Running run-p3 test 23..
+./SFH
+22:02:20:INFO: Running run-p3 test 12..
+./SFH
+22:02:20:INFO: Running run-p3 test 27..
+./SFH
+22:03:29:INFO: Running run-p3 test 4..
+./SFH
+22:04:01:INFO: Running run-p3 test 28..

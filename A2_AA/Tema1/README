@@ -1,0 +1,25 @@
+Simache Cristian Ioan
+324CA
+
+abi.cpp tab_rare.cpp SFH.cpp
+    algoritmii de rmq
+
+abi_set.cpp
+    versiunea cu set de abi
+    singulur algorim pe care operatia de set e viabila
+    regula de rulare e run-set1
+    la input fiecare linie incepe cu 1 sau 2:
+        1 x y   quary pe [x,y]
+        2 index nr  V[index]=nr
+
+generate.bash
+    scripul care genereaza fisierele de test
+    actiunile se selecteaza prin argumente
+
+    testele sunt grupate in script unde se explica scopul si parametri lor
+
+set_in set_out
+    directoarele cu fisierele de teste pentru variatia cu seatarea unei valorii
+
+2.pdf
+    lucrarea
