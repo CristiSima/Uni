@@ -1,0 +1,56 @@
+![](I'm_using_MARKDOWN)
+
+Cristian Simache
+324CA
+
+# notation
+- `k*N+i`
+ - **i**: `[1..**N**]`
+ - **k**: `[0..**K-1**]`
+ - true if the **i**-th **node** is stored in the **k**-th **spot**
+# retele
+
+- there is a **spot** for every person that must be chosen(**k**)
+ - a **spot** consist of **n** variables, 1 for each node
+ - if the **i**-th variable from a **spot** is **true** that is equivalent to that **spot** beeing used by the **i**-th node
+ - this results in **n**\***k** variables for the oracle
+- the oracle must respect the fallowing rules
+ - for every **spot** there must be a node
+ - for every NON-edge there can be NO pair of **spots**
+ - 2 diferent **spots** can NOT have the node
+ - one **spot** can NOT have 2 nodes
+- for decodeing, mark the **i**-th person as beeing present if the **i**-th variable in any spot is **true**
+- the complexity of the SAT reduction is `O(n^2*k^2)`, a neighbours matrix is used.
+
+
+# reclame
+
+- there is a **spot** for every person that must be chosen(**k**)
+ - a **spot** consist of **n** variables, 1 for each node
+ - if the **i**-th variable from a **spot** is **true** that is equivalent to that **spot** beeing used by the **i**-th node
+ - this results in **n**\***k** variables for the oracle
+- the oracle must respect the fallowing rules
+ - for every **spot** there must be a node
+ - for every edge there can be NO pair of **spots**
+ - 2 diferent **spots** can NOT have the node
+ - one **spot** can NOT have 2 nodes
+- because the oracle can only tell if a configuration for a specific **k** exists, and what is it, the oracle must be asked multiple times
+ - for decodeing, mark the **i**-th person as beeing present if the **i**-th variable in any spot is **true**
+- the complexity of the SAT reduction is `O(n^2*k^2)`, a neighbours matrix is used.
+ - can be `O(m*k^2+n*k^2+n^2*k)` if a edge vector is used
+ - the SAT reduction is used many times(n or log(n) if a binary search is used) for diferent k values so the total complexity is:
+  - `O(n^5)` respectively `O(n^4*log(n))` if a neighbours matrix is used
+  - `O(m*n^3*+n^4)` respectively `O((m*n^3*+n^4)log(n))` if a edge vector is used
+
+# registre
+
+ - there is a **spot** for every register available(**k**)
+  - a **spot** consist of **n** variables, 1 for each node
+  - if the **i**-th variable from a **spot** is **true** that is equivalent to that **spot** beeing used by the **i**-th node
+  - this results in **n**\***k** variables for the oracle
+ - the oracle must respect the fallowing rules
+  - for every node there must be a **spot**
+  - for every edge the nodes can't use the same **spot**
+  - 2 diferent **spots** can NOT have the node
+ - the complexity of the SAT reduction is `O(n^2*k)`, a neighbours matrix is used.
+   - can be `O(m*k+n^2*k)` if a edge vector is used
