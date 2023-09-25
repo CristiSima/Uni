@@ -1,0 +1,25 @@
+Using:
+    https://github.com/kgabis/parson
+        a simple Json library
+        used to decode and encode messages to and from the server
+    https://gitlab.cs.pub.ro/protocoale-de-comunicatie/pcom-laboratoare-public/-/tree/master/lab10
+
+
+server_connection
+    macro wrapper for open_connection with server parameters
+
+take_after(string, delim)
+    macro for getting pass the fist occurrence delim in string
+    if it is not present will not give NULL !!!!
+
+fgets_no_nl
+    wrapper for fgets that remove last character
+    it is assumed that fgets will return a \n\0 terminated string
+
+http_requeste
+    wrapper for send_to_server and receive_from_server
+    tries to reuse old connections if possible
+
+each command has it's own handle_ function
+
+in main the name of the command is read then execution is passed to it's appropriate handle_ function

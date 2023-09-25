@@ -1,0 +1,85 @@
+cerinte rezolvate:
+    Protocolul ARP
+    Forward-ul IPv4
+    LPM pentru rutare: implementat cu Trie
+    Protocolul ICMP
+    Actualizarea checksum-ului dupa schimbarea ttl-ului
+
+hexdump:
+    used for debugging
+
+get_next_hop_mac:
+    iterate over the ARP table
+    returns a match or an entry for ip=0
+
+add_arp_entry:
+    checks if and address is already in the ARP table
+    if it is the mac is updated
+    else a new entry is added
+
+send_ARP:
+    constructs and sends an ARP request for a given IP on the local network of a given interface
+
+struct arp_waiting_entry:
+    contains the packet waiting for an ARP reply and the IP of the next hop
+
+struct LPM_node:
+    a node in the LPM Trie
+    .has_entry: marks if this node contain an entry
+    .entry: the entry;
+    .*next[2]: pointers to the remaining structure
+
+LPM_node_constructor, LPM_node_entry_constructor:
+    wrappers for malloc that initialize memory
+
+route_LPM_init:
+    reads a route table from a given file with read_rtable
+    and constructs a Trie
+
+LPM_node_get_next_hop:
+    walks on a Trie searching for the best match
+
+because the layers are interconnected using functions to separate main in subroutines
+is impractical and will only make the code more complicated,
+this is why I chose a nested context design
+main is structure like:
+    loop:
+        IPv4:
+            check checksum and discard if doesn't match
+            TTL<=1:
+                save 0x40 bytes from the original dataframe
+                assemble a ICMP TIME LIMIT EXCEEDED over the old
+                changes the ip destination to the old source
+                recalculate icmp_checksum
+                continue IPv4 process
+            dest==self:
+                ip.protocol==ICMP:
+                    ECHO_REQUEST:
+                        switch IP destination and source
+                        changes type to ECHO_REPLY
+                        recalculate icmp_checksum
+                        continue IPv4 process
+            get route_table_entry
+            NO_ROUTE_FOUND:
+                save 0x40 bytes from the original dataframe
+                assemble a ICMP NO ROUTE over the old
+                changes the ip destination to the old source
+                recalculate icmp_checksum
+                get route_table_entry(assumming the route to the original source it is known)
+                continue IPv4 process
+            updates TTL
+            recalculate checksum
+                using RFC 1624 if only the TTL was changed
+            set new interface
+            set eth.src to the interface's MAC
+            get arp_entry for the MAC address of the next hop
+            if an entry was found set eth.dest to the dest's MAC and send_packet
+            else add the packet to arp_waiting_list and send an ARP request for next hop
+        ARP:
+            add entry in ARP table
+            ARPOP_REQUEST:
+                - swap addressed
+                - set it's own MAC address
+                - send back
+            ARPOP_REPLY:
+                - send all packets in the arp_waiting_list that were waiting for this
