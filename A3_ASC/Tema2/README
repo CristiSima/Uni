@@ -1,0 +1,9 @@
+implementation:
+    blas
+        used dtrmm for triangulat matrix optimization
+        used dgemm for generic matrix multiply and accumulate
+    neopt
+        used matrix multiplication for genericXgeneric, supXgeneric, genericXinf
+        matrix transpose using value swap
+    opt_m
+        optimized by changing loop orders: 33.5 -> 28.5 (local)

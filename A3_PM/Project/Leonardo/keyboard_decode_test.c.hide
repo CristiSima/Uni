@@ -1,0 +1,157 @@
+#include <stdio.h>
+#include "keyboard_decode.h"
+#include <stdlib.h>
+#include <string.h>
+
+struct token
+{
+    uint8_t is_special;
+    char *value;
+};
+static struct token token_init(uint8_t is_special, char *value)
+{
+    struct token token;
+    token.is_special=is_special;
+    token.value=value;
+    return token;
+}
+struct test
+{
+    char *input;
+    struct token *tokens;
+};
+
+int test_no=0;
+struct test tests[100];
+
+
+void def_tests()
+{
+    int token_no=0;
+
+    tests[test_no].input = "#WIN#r#WIN##sleep20ms#cmd /c color 02    && tree && color#ENTER#";
+    tests[test_no].tokens = calloc(100, sizeof(struct token));
+    tests[test_no].tokens[token_no++] = token_init(1, "WIN");
+    tests[test_no].tokens[token_no++] = token_init(0, "r");
+    tests[test_no].tokens[token_no++] = token_init(1, "WIN");
+    tests[test_no].tokens[token_no++] = token_init(1, "sleep20ms");
+    tests[test_no].tokens[token_no++] = token_init(0, "cmd /c color 02    && tree && color");
+    tests[test_no].tokens[token_no++] = token_init(1, "ENTER");
+
+    token_no=0;
+    test_no++;
+    tests[test_no].input = "##!@####";
+    tests[test_no].tokens = calloc(100, sizeof(struct token));
+    tests[test_no].tokens[token_no++] = token_init(0, "#");
+    tests[test_no].tokens[token_no++] = token_init(0, "!@");
+    tests[test_no].tokens[token_no++] = token_init(0, "#");
+    tests[test_no].tokens[token_no++] = token_init(0, "#");
+
+    token_no=0;
+    test_no++;
+    tests[test_no].input = "BCD#CTRL##LEFT##CTRL#A";
+    tests[test_no].tokens = calloc(100, sizeof(struct token));
+    tests[test_no].tokens[token_no++] = token_init(0, "BCD");
+    tests[test_no].tokens[token_no++] = token_init(1, "CTRL");
+    tests[test_no].tokens[token_no++] = token_init(1, "LEFT");
+    tests[test_no].tokens[token_no++] = token_init(1, "CTRL");
+    tests[test_no].tokens[token_no++] = token_init(0, "A");
+
+    token_no=0;
+    test_no++;
+    tests[test_no].input = "#A##A##A##A#";
+    tests[test_no].tokens = calloc(100, sizeof(struct token));
+    tests[test_no].tokens[token_no++] = token_init(1, "A");
+    tests[test_no].tokens[token_no++] = token_init(1, "A");
+    tests[test_no].tokens[token_no++] = token_init(1, "A");
+    tests[test_no].tokens[token_no++] = token_init(1, "A");
+
+    token_no=0;
+    test_no++;
+    tests[test_no].input = "a####a";
+    tests[test_no].tokens = calloc(100, sizeof(struct token));
+    tests[test_no].tokens[token_no++] = token_init(0, "a");
+    tests[test_no].tokens[token_no++] = token_init(0, "#");
+    tests[test_no].tokens[token_no++] = token_init(0, "#");
+    tests[test_no].tokens[token_no++] = token_init(0, "a");
+
+}
+
+void run_test(struct test current_test)
+{
+    reset();
+    append(current_test.input);
+
+    const char *token;
+    uint8_t is_special=0;
+    token=get_next(&is_special);
+    for(int i=0;token;i++)
+    {
+        if(!token)
+        {
+            printf("TOKEN IS NULL\n");
+            return;
+        }
+        if(current_test.tokens[i].is_special == is_special && !strcmp(current_test.tokens[i].value, token))
+            printf("OK:   ");
+        else
+            printf("FAIL: ");
+
+        printf("%d: %s\n", is_special, token);
+
+        token=get_next(&is_special);
+    }
+    puts("");
+}
+
+void custom_test()
+{
+
+        reset();
+        append("ASD");
+        // append("#WI");
+        append_char('#');
+        append_char('W');
+        append_char('I');
+        uint8_t is_special=0;
+        const char *token;
+
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+        append("N");
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+        append("#");
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+
+        append("a");
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+        append("sd");
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+        append("s");
+        token=get_next(&is_special);
+        printf("|%s|%d\n", token, is_special);
+
+}
+
+// thx Arduino IDE for beeing a piece of shit
+int main()
+{
+    def_tests();
+    for(int i=0;i<=test_no;i++)
+    {
+        printf("Test: %d\t\t%s\n", i, tests[i].input);
+        run_test(tests[i]);
+    }
+
+    custom_test();
+
+    printf("DONE\n");
+}
