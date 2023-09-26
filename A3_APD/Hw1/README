@@ -1,0 +1,17 @@
+utilizez o implementare proprie de linked_list generica extinsa de macro-uri pentru un cod mai lizibil/compact
+
+optinerea fisierului (get_next_file):
+	intoarce fisierul de consum deschis sau NULL daca nu mai sunt fisiere
+	are un lock intern(static) ce trebuie initializat prin apelarea cu primul parametru NULL
+
+mapper:
+	incearca sa obtine un nou fisier de procesat si il proceseaza
+	pentru fiecare numar verifica daca are o baza valida pentru puterile posibile
+		verificare se face prin analiza puterii factorilor
+		descompunerea se face o singura data si se pastreaza un vector de flag-uri
+			pentru fiecare putere daca puterile factorilor precedenti sunt multipli de puterea specifica
+		cam_be_power este un and pe toate flag-urile(can_be_power_of[2:])
+
+reducer
+	creaza o lista in care fiecare numar din output-urile mapper-elor apare doar odata pentru a aflat numarul lor
+	si scrie numarul in fisier

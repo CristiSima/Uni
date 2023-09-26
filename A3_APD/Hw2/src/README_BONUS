@@ -1,0 +1,8 @@
+SplitFileWorker:
+	pentru fiecare linie apeleaza methoda process, ce trebuie suprascrisa
+	
+	initializare:
+		muta cursorul fisierului cu o pozitie inainte de locul de incaput
+		avanseaza cursorul pana la finalul liniei
+
+	mentine pozitia cursorului in fisier iar atunci cand trece de finalul sectiunii se opreste

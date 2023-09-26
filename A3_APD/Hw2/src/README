@@ -1,0 +1,4 @@
+Cele 2 nivele de thread-uri, reprezentate prin clasele OrderWorker si ProductWorker,
+folosesc o abstractie peste RecursiveTask specifica problemei care implementeaza functionalitate de citire pe sectiuni ceruta de bonus.
+
+Main-ul invoca P OrderWorker-ii care fiecare la randul lui va face fork in P ProductWorker-ii.

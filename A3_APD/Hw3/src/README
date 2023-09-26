@@ -1,0 +1,22 @@
+Pentru a tine cont de cazul in care 0 si 1 nu sunt conectate consider ca,
+coordonatorii sunt conectati in linie in ordinea: [1, 2, 3, 0]
+
+Dupa citirea worker-ilor coordonatorii trimit sub-topologia proprie in spre capete,
+apoi salveaza si dau mai departe sub-topologiile primite.
+
+Dupa ce fiecare coordonator cunoaste topologia intreaga o trimite catre worker-ii.
+
+
+
+Pentru impartirea vectorului utilizez un sistem pe 2 nivele.
+
+Coordonatorii pastreaza sectiunea pentru workerii proprii si trimit mai departe(la ceilalti coordonatorii) restul din vector.
+Impartirea se face de fiecare coordonator luand un procent din vector aproximativ egal cu workerii/(workerii+ workerii_stanga)
+
+Impartirea catre workerii se face de coordonatorul propriu.
+
+Reasamblarea vectorului se face reluand procesul de impartire in sens invers.
+
+
+MPI_Send_Variable, MPI_Recv_Variable, MPI_Recv_Variable_Init are some usefull wrappers around the orignal
+MPI functions that also send/recv the size, and allocate the buffer for MPI_Recv_Variable_Init.
