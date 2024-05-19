@@ -1,0 +1,163 @@
+#include "race_map.h"
+#include "transform2D.h"
+
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <stdlib.h>
+
+#include "core/engine.h"
+#include "utils/gl_utils.h"
+
+#include "utils/text_utils.h"
+
+#define STEPS 50
+#define ROUND_SEGMENT_ANGLE 5
+#define STREIGHT_SEGMENT_DISTANCE 0.5f
+
+#define ROAD_WIDTH 1
+
+Mesh* tema2::LoadMap(
+    const std::string &name,
+    const std::string &file_path,
+    glm::vec3 color,
+    bool fill)
+{
+    std::vector<VertexFormat> vertices = {  };
+
+	system("ls");
+	system("pwd");
+	std::ifstream in(PATH_JOIN("/home/student/gfx/local/src/lab_m1/tema2", "tracks", file_path));
+
+	int track_components=0;
+	int distance, angle, radius;
+
+	int steps;
+	int total_steps=0;
+
+	in>>track_components;
+
+
+
+	glm::vec3 last_pos=glm::vec3(0, 0, 0);
+	glm::vec3 direction=glm::vec3(1, 0, 0);
+	glm::vec3 road_perpendicular=glm::vec3(0, 0.1, 0);
+
+	glm::vec3 circle_center, circle_enter, circle_leave;
+	glm::vec3 next_edge, next_direction, next_road_perpendicular;
+	glm::vec3 center_pos, curve_perpendicular, start_radius;
+	glm::mat3 temp_rotate;
+	float k;
+
+	std::cout << track_components << '\n';
+	for(int i=1;i<track_components;i++)
+	{
+		in>>distance>>angle>>radius;
+
+		k=radius/sin(RADIANS((float)180-angle/2));
+		next_edge=last_pos+float(distance)*direction;
+
+		next_direction=direction*transform2D::Rotate(RADIANS(angle));
+		next_road_perpendicular=road_perpendicular*transform2D::Rotate(RADIANS(angle));
+
+		std::cout<<direction*transform2D::Rotate(RADIANS((float)angle/2))<<"\n";
+		std::cout<<k<<"\n";
+
+		circle_center=next_edge+ direction*transform2D::Rotate(RADIANS(angle+((float)180-angle)/2))*k;
+		circle_enter=last_pos+direction*float(distance-radius);
+		circle_leave=next_edge+float(radius)*next_direction;
+
+		steps=(distance-radius)/STREIGHT_SEGMENT_DISTANCE;
+		total_steps+=steps;
+		std::cout<<"STREIGHT\n";
+		for(int i=0;i<=steps;i++)
+		{
+			center_pos=last_pos+direction*((float)i*STREIGHT_SEGMENT_DISTANCE);
+			vertices.push_back(VertexFormat(
+				center_pos+road_perpendicular,
+				color
+			));
+			vertices.push_back(VertexFormat(
+				center_pos-road_perpendicular,
+				color
+			));
+			std::cout<<center_pos+road_perpendicular<<" "<<center_pos-road_perpendicular<<"\n";
+		}
+
+		steps=abs(angle)/ROUND_SEGMENT_ANGLE;
+		total_steps+=steps+1;
+		start_radius=circle_enter-circle_center;
+		std::cout<<"ROUND\n";
+		std::cout<<circle_enter<<"\n";
+		std::cout<<circle_center<<"\n";
+		std::cout<<circle_leave<<"\n";
+		std::cout<<start_radius<<"\n";
+		for(int i=0;i<=steps;i++)
+		{
+			temp_rotate=transform2D::Rotate(RADIANS((float)angle*i/steps));
+			center_pos=circle_center+start_radius*temp_rotate;
+			curve_perpendicular=road_perpendicular*temp_rotate;
+
+			vertices.push_back(VertexFormat(
+				center_pos+curve_perpendicular,
+				color
+			));
+			vertices.push_back(VertexFormat(
+				center_pos-curve_perpendicular,
+				color
+			));
+			std::cout<<center_pos+curve_perpendicular<<" "<<center_pos-curve_perpendicular<<"\n";
+		}
+	    // vertices.push_back(VertexFormat(glm::vec3(lengthX*sin((float)2*3.1415f*i/STEPS), lengthY*cos((float)2*3.1415f*i/STEPS), 0), color));
+		last_pos=circle_leave;
+		direction=next_direction;
+		road_perpendicular=next_road_perpendicular;
+	}
+
+	float a=direction.y/direction.x;
+	float b=last_pos.y-a*last_pos.x;
+
+	float dist=-b/a;
+
+	std::cout<<dist<<"\n";
+	std::cout<<last_pos<<"\n";
+	std::cout<<direction<<"\n";
+	if((dist<0) || (dist>last_pos.x && direction.x<0) || (dist>last_pos.x && direction.x>0))
+	{
+		std::cout << "BORKED MAP FILE\n";
+		// exit(3);
+	}
+	else
+	{
+
+	}
+
+    // for(int i=1;i<=STEPS;i++)
+    //     vertices.push_back(VertexFormat(glm::vec3(lengthX*sin((float)2*3.1415f*i/STEPS), lengthY*cos((float)2*3.1415f*i/STEPS), 0), color));
+	//
+    std::vector<unsigned int> indices = { };
+
+    for(int i=0;i<total_steps;i++)
+    {
+        indices.push_back(2*i);
+        indices.push_back(2*i+1);
+        indices.push_back(2*i+2);
+
+        indices.push_back(2*i+1);
+        indices.push_back(2*i+2);
+		indices.push_back(2*i+3);
+    }
+    // indices.push_back(0);
+    // indices.push_back(1);
+    // indices.push_back(STEPS);
+
+    Mesh* square = new Mesh(name);
+
+    if (!fill) {
+        std::cout<<"AI UITAT SA IMPLEMENTEZI AICI \n";
+        exit(0);
+    }
+
+    square->InitFromData(vertices, indices);
+    return square;
+}
