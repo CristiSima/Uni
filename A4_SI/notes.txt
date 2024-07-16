@@ -1,0 +1,110 @@
+# kernel config
+
+export KERNEL=kernel8
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-linux-gnu-
+
+
+set:
+• LOCALVERSION=-tema2
+• DEFAULT_HOSTNAME=tema2
+• MODULES=n
+• FTDI =y
+• BLUETOTH = n
+
+make  ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+make  ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
+
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image Image.gz dtbs -j$(nproc)
+
+driver serial FTDI FT232H
+În final, la rularea prin qemu, trebuie să folosiți device tree-ul care începe cu bcm2837-DTB
+
+
+# rootfs
+
+
+wget https://buildroot.org/downloads/buildroot-2023.08.tar.xz
+tar xf buildroot-*
+rm buildroot-*.tar.*
+cd buildroot-*
+
+Hostname: tema2
+root password: tema2
+
+user table
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+student -1 student -1 =student /home/student /bin/sh - Student User
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+python
+	flask
+	serial
+avahi
+openssh
+	
+make menuconfig
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+dd if=/dev/zero of=output/images/rootfs.img bs=1M  count=64
+parted output/images/rootfs.img
+#
+mklabel msdos
+mkpart primary fat32 1MiB 5MiB
+mkpart primary ext4 5MiB 100%
+p
+q
+#
+
+# in output/images
+
+sudo losetup -P /dev/loop0 rootfs.img
+
+sudo mkfs -t ext4 -L MyRootFS /dev/loop0p2
+
+mkdir output/images/rootfs_p2
+sudo mount /dev/loop0p2  rootfs_p2
+
+cd rootfs_p2
+sudo tar -x -f ../rootfs.tar
+cd ..
+sudo umount rootfs_p2
+sudo losetup -d /dev/loop0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# update img
+# in output/images
+
+sudo losetup -P /dev/loop0 rootfs.img
+sudo mount /dev/loop0p2  rootfs_p2
+
+cd rootfs_p2
+sudo tar -x -f ../rootfs.tar
+
+cd ..
+sudo umount rootfs_p2
+sudo losetup -d /dev/loop0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+changes
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo "PermitRootLogin yes" | sudo tee -a etc/ssh/sshd_config
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+output/target/etc/ssh/sshd_config
+
+https://midnightprogrammer.net/post/create-mount-and-unmount-img-files-in-ubuntu/
+https://blog.conan.io/2019/08/27/Creating-small-Linux-images-with-Buildroot.html
+https://blog.crysys.hu/2018/06/using-buildroot-to-create-custom-linux-system-images/
+
+

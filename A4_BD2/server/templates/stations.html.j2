@@ -1,0 +1,56 @@
+{% extends "base.html.j2" %}
+
+{% block head %}
+    <title>Test</title>
+
+    <script>
+    function update_price(id, old_val)
+    {
+        var new_val=prompt('New Use Tax', old_val)
+        console.log(new_val);
+        const response = fetch("/station_tax/"+id, {
+            method: "POST",
+            body: new_val
+        }).then(() => window.location.reload());
+
+        
+    }
+    </script>
+{% endblock %}
+
+{%set heads=[
+    ("ID", "col-1"),
+    ("Name", "col"),
+    ("Use Tax", "col-1"),
+]%}
+
+{% block body %}
+    <div class="container border">
+        <div class="row">
+            {% for name, col in heads %}
+                <div class="{{col}}">
+                    {{name}}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% for row in rows %}
+        <div class="row">
+            {% for el, (head_name, col) in zip(row, heads) %}
+                {% if head_name == "Use Tax" %}
+                    <div class="{{col}}" onclick="update_price({{row[0]}}, {{el}})">
+                        {{el}}
+                    </div>
+                {% else %}
+                    <div class="{{col}}">
+                        {{el}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}
+</body>

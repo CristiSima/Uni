@@ -1,0 +1,16 @@
+    <div class="container border" style="">
+        <div class="col">
+            <div>
+                <h4>{{sensor_name}}</h4>
+            </div>
+        </div> 
+        <div class="col">
+            <div>
+            {% if type(sensor_data) != list %}
+                N/A
+            {% else %}
+                {{sensor_data[1]}}
+            {% endif %}
+            </div>
+        </div> 
+    </div>

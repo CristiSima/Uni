@@ -1,0 +1,65 @@
+Generators:
+    new SELF_TYPE
+        -> SELF_TYPE(self)
+
+    self
+        -> SELF_TYPE(self)
+
+    func(): SELF_TYPE
+        -> SELF_TYPE(self)
+
+    self.func(): SELF_TYPE
+        -> SELF_TYPE(self)
+    
+    SELF_TYPE(self).func(): SELF_TYPE
+        -> SELF_TYPE(self)
+
+    NOTING GENERATES SELF_TYPE( ~ self )
+
+Ignore:
+    Ta.func(): SELF_TYPE
+        -> Ta
+
+Consume:
+    SELF_TYPE.fun(): Ta
+        -> Ta
+
+    fun(): Ta
+        -> Ta
+
+Other:
+    new Ta
+        -> Ta
+
+    Str/Nr/Bool
+        -> Str/Nr/Bool
+
+    Math
+        -> Int
+
+    Logic
+        -> Bool
+
+    Block { ... Ta }
+        -> Ta
+
+    Let ... Ta
+        -> Ta
+
+    Case T0 [T1, T2, ... Tn]
+        -> common(T1, T2, ... Tn)
+
+    if c T1 else T2
+        -> common(T1, T2)
+
+
+Ex:
+    A<B<C
+    some
+    SELF_TYPE(A),B
+
+    in A: A
+    in B: B
+    in C: B     INCORECT FOR SELF_TYPE
+
+    S

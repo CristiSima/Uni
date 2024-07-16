@@ -1,0 +1,29 @@
+version: "3"
+services:
+    mongo_db:
+        image: mongo
+        restart: unless-stopped
+        volumes:
+            - db_data:/data/db
+    api_gateway:
+        build:
+            context: api_gateway
+        restart: unless-stopped
+        ports:
+            - 5000:5000
+        environment:
+            MONGO_HOST: mongo_db
+        depends_on:
+            - mongo_db
+    mongo-express:
+        image: mongo-express
+        restart: always
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_URL: mongodb://mongo_db:27017/
+        depends_on:
+            - mongo_db
+
+volumes:
+    db_data: {}

@@ -1,0 +1,156 @@
+
+{% extends "base.html.j2" %}
+
+{% block head %}
+    <title>{{recipe[1]}} Info</title>
+
+    <script>
+    function update_price(id, old_val)
+    {
+        var new_val=prompt('New Price', old_val)
+        console.log(new_val);
+        const response = fetch("/item_price/"+id, {
+            method: "POST",
+            body: new_val
+        }).then(() => window.location.reload());
+    }
+    </script>
+{% endblock %}
+
+{%set heads=[
+    ("ID", "col-1"),
+    ("name", "col-2"),
+    ("description", "col"),
+    ("Crafting Station", "col-2"),
+    ("tax", "col-1"),
+]%}
+
+{% block body %}
+    <div class="container border">
+        <div class="row">
+            {% for name, col in heads %}
+                <div class="{{col}}">
+                    {{name}}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% for el, (head_name, col) in zip(recipe, heads) %}
+                <div class="{{col}}">
+                    {{el}}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    
+    <br>
+    <br>
+    {%set heads=[
+        ("ID", "col-1"),
+        ("Name", "col"),
+        ("Tier", "col-1"),
+        ("Enchantment", "col-2"),
+        ("Quality", "col-1"),
+        ("Cuantity", "col-1")
+    ]%}
+    <div class="container border">
+        <div class="row">
+            Ingredients
+        </div>
+        <div class="row">
+            {% for name, col in heads[1:] %}
+                <div class="{{col}}">
+                    {{name}}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% for row in ingredients %}
+        <div class="row">
+            {% for el, (head_name, col) in list(zip(row, heads))[1:] %}
+                {% if head_name == "Price" %}
+                    <div class="{{col}}" onclick="update_price({{row[0]}}, {{el}})">
+                        {{el}}
+                    </div>
+                {% else %} {% if head_name in ["ID", "Name"] %}
+                    <div class="{{col}}" onclick="update_price({{row[0]}}, {{el}})">
+                    <a href="/item/{{row[0]}}">
+                        {{el}}
+                     </a>
+                    </div>
+                {% else %}
+                    <div class="{{col}}">
+                        {{el}}
+                    </div>
+                {% endif %} {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <br>
+
+    {%set heads=[
+        ("ID", "col-1"),
+        ("Name", "col"),
+        ("Tier", "col-1"),
+        ("Enchantment", "col-2"),
+        ("Quality", "col-1"),
+        ("Cuantity", "col-1")
+    ]%}
+    <div class="container border">
+        <div class="row">
+            Results
+        </div>
+
+        <div class="row">
+            <div class="col-1">
+                Probability
+            </div>
+            <div class="col">
+                <div class="row">
+                {% for name, col in heads[1:] %}
+                    <div class="{{col}}">
+                        {{name}}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% for probability, results in result_sets %}
+        <div class="row border">
+            <div class="col-1">
+                {{probability}}
+            </div>
+            <div class="col">
+            {% for row in results %}
+                <div class="row">
+                    {% for el, (head_name, col) in list(zip(row, heads))[1:] %}
+                        {% if head_name == "Price" %}
+                            <div class="{{col}}" onclick="update_price({{row[0]}}, {{el}})">
+                                {{el}}
+                            </div>
+                        {% else %} {% if head_name in ["ID", "Name"] %}
+                            <div class="{{col}}" onclick="update_price({{row[0]}}, {{el}})">
+                            <a href="/item/{{row[0]}}">
+                                {{el}}
+                            </a>
+                            </div>
+                        {% else %}
+                            <div class="{{col}}">
+                                {{el}}
+                            </div>
+                        {% endif %} {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

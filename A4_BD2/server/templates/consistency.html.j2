@@ -1,0 +1,60 @@
+{% extends "base.html.j2" %}
+
+{% block head %}
+    <title> Albion Market</title>
+{% endblock %}
+
+
+{% block body %}
+{% if len(rows) == 0 %}
+    <h1 style="color:green;"> ALL Recipes are corectly defined</h1>
+{% else %}
+    <div class="container border">
+        <div class="row">
+            Recipes with incorect probability distributions
+        </div>
+
+        <div class="row">
+            <div class="col">
+                Name
+            </div>
+            <div class="col">
+                Description
+            </div>
+            <div class="col">
+                Crafting Station
+            </div>
+            <div class="col">
+                Probability Sum 
+            </div>
+        </div>
+
+        {% for row in rows %}
+        {{print(row, flush=1) or ""}}
+        <div class="row">
+            <div class="col">
+            <a href="/recipe/{{row[0]}}">
+                {{row[1]}}
+            </a>
+            </div>
+            <div class="col">
+            <a href="/recipe/{{row[0]}}">
+                {{row[2] or ""}}
+            </a>
+            </div>
+            <div class="col">
+            <a href="/recipe/{{row[0]}}">
+                {{row[3]}}
+            </a>
+            </div>
+            <div class="col">
+            <a href="/recipe/{{row[0]}}">
+                {{row[4]}} 
+            </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
+

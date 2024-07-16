@@ -1,0 +1,50 @@
+{% extends "base.html.j2" %}
+
+{% block head %}
+<title>Test</title>
+{% endblock %}
+
+{%set heads=[
+    (None, "col-2"),
+    ("Item Name", "col-2"),
+    (None, "col-2"),
+    ("Recipe Name", "col-2"),
+    ("Consumed", "col-1"),
+    ("Produced", "col-1"),
+    ("Delta", "col-1"),
+]%}
+
+{% block body %}
+    <div class="container border">
+        <div class="row">
+            {% for name, col in heads %}
+            {% if name %}
+                <div class="{{col}}">
+                    {{name}}
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    {% for row in rows %}
+        <div class="row">
+            {% for el, (name, col) in zip(row, heads) %}
+            {% if name %}
+                <div class="{{col}}">
+                    {% if name == "Item Name" %}
+                        <a href="/item/{{row[0]}}">
+                    {% else %}
+                        <a href="/recipe/{{row[2]}}">
+                    {% endif %}
+                    {{el if el else ""}}
+                    </a>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}
+</body>

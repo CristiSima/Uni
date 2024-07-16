@@ -1,0 +1,62 @@
+{% extends "base.html.j2" %}
+
+{% block head %}
+
+<title> SI Sensors</title>
+
+<script>
+    setTimeout(() => {window.location.reload();}, 3000)
+</script>
+{% endblock head %}
+
+{% block body %}
+<div class="containse" style="margin: 20px;width: 80%;text-align: center;">
+
+    <div class="row">
+        <div class="col">
+            <h1>Interior</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {{render_template("sensor_info.html.j2",
+                sensor_name="Temperature",
+                sensor_data=sensor_data["ext"]["temp"]
+            )}}
+        </div>
+        <div class="col">
+            {{render_template("sensor_info.html.j2",
+                sensor_name="Humidity",
+                sensor_data=sensor_data["ext"]["humidity"]
+            )}}
+        </div>
+        <div class="col">
+            {{render_template("sensor_info.html.j2",
+                sensor_name="Is Raining?",
+                sensor_data=sensor_data["ext"]["rain"]
+            )}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h1>Exterior</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{render_template("sensor_info.html.j2",
+                sensor_name="Temperature",
+                sensor_data=sensor_data["int"]["temp"]
+            )}}
+        </div>
+        <div class="col">
+            {{render_template("sensor_info.html.j2",
+                sensor_name="Humidity",
+                sensor_data=sensor_data["int"]["humidity"]
+            )}}
+        </div>
+    </div>
+</div>
+{% endblock body %}

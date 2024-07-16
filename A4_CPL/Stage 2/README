@@ -1,0 +1,20 @@
+requierments.txt
+    pip dependencies
+
+tests were removed
+
+Compiler:
+    builds first AST using the first file
+    adds the classes from the other files to the AST
+
+    Variable resolution's first pass:
+        add builtins
+        link scopes
+        link Symbols to scope
+        check for reserved keywords
+
+    seccond pass:
+        check inheritance
+        chack undefine
+        type evaluation
+        check for Main.main()

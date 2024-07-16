@@ -1,0 +1,149 @@
+{% extends "base.html.j2" %}
+
+{% block head %}
+    <title>{{item[1]}} Info</title>
+
+    <script>
+    function update_price(id, old_val)
+    {
+        var new_val=prompt('New Price', old_val)
+        console.log(new_val);
+        const response = fetch("/item_price/"+id, {
+            method: "POST",
+            body: new_val
+        }).then(() => window.location.reload());
+    }
+    </script>
+{% endblock %}
+
+{%set heads=[
+    ("ID", "col-1"),
+    ("Name", "col"),
+    ("Tier", "col-1"),
+    ("Enchantment", "col-2"),
+    ("Quality", "col-1"),
+    ("Price", "col-1")
+]%}
+
+{% block body %}
+    <div class="container border">
+        <div class="row">
+            {% for name, col in heads[1:] %}
+                <div class="{{col}}">
+                    {{name}}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% for el, (head_name, col) in list(zip(item, heads))[1:] %}
+                {% if head_name == "Price" %}
+                    <div class="{{col}}" onclick="update_price({{item[0]}}, {{el}})">
+                        {{el}}
+                    </div>
+                {% else %}
+                    <div class="{{col}}">
+                        {{el}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    
+    <br>
+    <br>
+    <div class="container border"> <div class="row">
+        <div class="col">
+            <div class="row">
+                Recipes makeing  {{item[1]}}
+            </div>
+            
+            <div class="row">
+                <div class="col-1">
+                    ID
+                </div>
+                <div class="col">
+                    Name
+                </div>
+                <div class="col">
+                    Description
+                </div>
+                <div class="col-2">
+                    Average Output
+                </div>
+            </div>
+            {% for (r_id, r_name, r_desc, r_avg_out) in made_by_rows %}
+            <div class="row">
+                <div class="col-1">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_id}}
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_name}}
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_desc}}
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_avg_out}}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="col">
+            <div class="row">
+                Recipes using {{item[1]}}
+            </div>
+            
+            <div class="row">
+                <div class="col-1">
+                    ID
+                </div>
+                <div class="col">
+                    Name
+                </div>
+                <div class="col">
+                    Name
+                </div>
+                <div class="col-2">
+                    Used ammount
+                </div>
+            </div>
+            {% for (r_id, r_name, r_desc, r_used) in used_in_rows %}
+            <div class="row">
+                <div class="col-1">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_id}}
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_name}}
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_desc}}
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a href="/recipe/{{r_id}}">
+                    {{r_used}}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div> </div>
+
+
+{% endblock %}
+</body>

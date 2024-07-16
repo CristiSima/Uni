@@ -1,0 +1,60 @@
+version: "3"
+services:
+    db:
+        image: influxdb:2.6
+        networks:
+            - db_access_for_grafana
+            - db_access_for_adaptop
+        volumes:
+            - db_data:/var/lib/influxdb2
+            - db_config:/etc/influxdb2
+        env_file:
+            - .env
+
+
+    mqtt_server:
+        image: sprc3_mqtt_server:latest
+        ports:
+            - 1883:1883
+        networks:
+            - mqtt_access_for_adaptop
+
+    mqtt_adaptor:
+        image: sprc3_mqtt_adaptor:latest
+        networks:
+            - db_access_for_adaptop
+            - mqtt_access_for_adaptop
+        depends_on:
+            - db
+            - mqtt_server
+        env_file:
+            - .env
+        environment:
+            DEBUG_DATA_FLOW: "true_"
+
+    grafana:
+        image: grafana/grafana:latest
+        networks:
+            - db_access_for_grafana
+        ports:
+            - 80:3000
+        volumes:
+            - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+            - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml:ro
+            - ./grafana/dashboards/:/var/lib/grafana/dashboards/:ro
+        environment:
+            GF_SECURITY_ADMIN_USER: asistent
+            GF_SECURITY_ADMIN_PASSWORD: grafanaSPRC2023
+        env_file:
+            - .env
+        depends_on:
+            - db
+
+
+networks:
+    db_access_for_grafana:
+    db_access_for_adaptop:
+    mqtt_access_for_adaptop:
+volumes:
+    db_data:
+    db_config:
